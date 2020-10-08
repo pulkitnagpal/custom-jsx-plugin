@@ -3,6 +3,11 @@ module.exports = function (babel) {
   return {
     name: "custom-jsx-plugin",
     visitor: {
+      JSXText(path) {
+        // if the child of JSX Element is normal string
+        var stringChild = t.stringLiteral(path.node.value);
+        path.replaceWith(stringChild, path.node)
+      },
       JSXElement(path) {
         //get the opening element from jsxElement node
         var openingElement = path.node.openingElement;  
